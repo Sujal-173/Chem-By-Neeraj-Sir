@@ -21,6 +21,7 @@ export default function ContactForm() {
     e.preventDefault();
     setError("");
     setLoading(true);
+    const form = e.currentTarget;
     const formData = new FormData(e.currentTarget);
     try {
       const res = await fetch("/api/contact", {
@@ -34,7 +35,7 @@ export default function ContactForm() {
           data?.error || "Something went wrong. Please try again.",
         );
       }
-      e.currentTarget.reset();
+      form.reset();
       setSubmitted(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
