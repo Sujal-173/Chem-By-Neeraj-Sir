@@ -1,0 +1,96 @@
+import { defineField, defineType } from "sanity";
+import { DocumentTextIcon } from "@sanity/icons";
+
+export default defineType({
+  name: "blogPost",
+  title: "Blog Post",
+  type: "document",
+  icon: DocumentTextIcon,
+  groups: [
+    { name: "content", title: "Content", default: true },
+    { name: "seo", title: "SEO" },
+  ],
+  fields: [
+    defineField({
+      name: "title",
+      title: "Title",
+      type: "string",
+      group: "content",
+      validation: (Rule) => Rule.required().max(120),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      group: "content",
+      options: { source: "title", maxLength: 96 },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "excerpt",
+      title: "Excerpt",
+      type: "text",
+      rows: 3,
+      group: "content",
+      description: "Short summary shown on blog listing cards.",
+      validation: (Rule) => Rule.required().max(220),
+    }),
+    defineField({
+      name: "coverImage",
+      title: "Cover image",
+      type: "cloudinaryImage",
+      group: "content",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "category",
+      title: "Category",
+      type: "reference",
+      to: [{ type: "category" }],
+      group: "content",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "tags",
+      title: "Tags",
+      type: "array",
+      of: [{ type: "string" }],
+      group: "content",
+      options: { layout: "tags" },
+    }),
+    defineField({
+      name: "author",
+      title: "Author",
+      type: "reference",
+      to: [{ type: "author" }],
+      group: "content",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "body",
+      title: "Body",
+      type: "blockContent",
+      group: "content",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "readingTime",
+      title: "Reading time (minutes)",
+      type: "number",
+      group: "content",
+      description: "Manually set, or leave blank to estimate from word count on the frontend.",
+    }),
+    defineField({
+      name: "publishedAt",
+      title: "Published at",
+      type: "datetime",
+      group: "content",
+      initialValue: () => new Date().toISOString(),
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({ name: "seo", title: "SEO", type: "seo", group: "seo" }),
+  ],
+  preview: {
+    select: { title: "title", subtitle: "publishedAt" },
+  },
+});
