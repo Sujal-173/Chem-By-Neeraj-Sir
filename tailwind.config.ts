@@ -71,12 +71,22 @@ const config: Config = {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
         },
+        "slide-in-left": {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
       },
       animation: {
         float: "float 6s ease-in-out infinite",
         "float-slow": "float-slow 8s ease-in-out infinite",
         "fade-up": "fade-up 0.7s ease-out forwards",
         shimmer: "shimmer 3s linear infinite",
+        "slide-in-left": "slide-in-left 0.2s ease-out",
+        "fade-in": "fade-in 0.2s ease-out",
       },
     },
   },

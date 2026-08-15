@@ -36,6 +36,15 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24, // refresh once per day of activity
   },
+  // Slows down brute-force password guessing against the single admin
+  // account. Better Auth counts requests per IP+route in memory by default
+  // (fine for a single-instance deploy; swap in a Redis/Upstash secondary
+  // storage for multi-instance production if that becomes the setup).
+  rateLimit: {
+    enabled: true,
+    window: 60, // seconds
+    max: 10, // requests per window per IP, across all auth routes
+  },
   advanced: {
     // Every admin surface (Studio, dashboard) lives under /studio and
     // /admin, both same-origin — no cross-site cookie needs.

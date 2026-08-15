@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import { getFaqs } from "@/lib/sanity/queries";
 import FaqAccordion from "@/components/ui/FaqAccordion";
+import { buildMetadata, buildBreadcrumbSchema } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Frequently Asked Questions",
-  description: "Answers to common questions about notes, purchases, and upcoming online classes.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Frequently Asked Questions | Notes, Classes & Purchases",
+  description:
+    "Answers to common questions about Chemistry notes, purchases, and upcoming online classes with Neeraj Sir.",
+  path: "/faq",
+  keywords: ["chemistry notes faq", "chemistry classes faq"],
+});
 
 const CATEGORY_LABEL: Record<string, string> = {
   general: "General",
@@ -31,11 +35,20 @@ export default async function FAQPage() {
     })),
   };
 
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "FAQ", path: "/faq" },
+  ]);
+
   return (
     <div className="py-20 lg:py-28">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <div className="container-custom max-w-3xl">
         <div className="text-center mb-14">

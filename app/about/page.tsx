@@ -2,24 +2,34 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { GraduationCap, Languages, Calendar } from "lucide-react";
 import { getAboutPage } from "@/lib/sanity/queries";
+import { buildMetadata, buildBreadcrumbSchema } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const about = await getAboutPage();
-  return {
-    title:
-      about.seo?.metaTitle || "About Neeraj Sharma | CBSE Chemistry Teacher",
+  return buildMetadata({
+    title: about.seo?.metaTitle || "About Neeraj Sharma | CBSE Chemistry Teacher, 15+ Years Experience",
     description:
       about.seo?.metaDescription ||
-      "Learn about Neeraj Sharma's 15+ years of experience teaching CBSE Chemistry with a concept-based approach.",
-  };
+      "Learn about Neeraj Sharma's 15+ years of experience teaching CBSE Chemistry with a concept-based approach for Class 9 , Class 10 , Class 11, Class 12, JEE and NEET.",
+    path: "/about",
+    keywords: ["Neeraj Sharma biography", "chemistry teacher experience", "about chemistry teacher"],
+  });
 }
 
 export default async function AboutPage() {
   const about = await getAboutPage();
   const hasPhoto = Boolean(about.photo?.url);
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+  ]);
 
   return (
     <div className="py-20 lg:py-28">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <div className="container-custom">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-5 lg:sticky lg:top-28">

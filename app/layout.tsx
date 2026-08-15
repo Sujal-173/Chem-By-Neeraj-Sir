@@ -1,9 +1,14 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins, Inter, Space_Grotesk } from "next/font/google";
-import AnnouncementBar from "@/components/homepage/AnnouncementBar";
-import Navbar from "@/components/homepage/Navbar";
-import Footer from "@/components/homepage/Footer";
-import WhatsAppFloatButton from "@/components/ui/WhatsAppFloatButton";
+import SiteChrome from "@/components/layout/SiteChrome";
+import {
+  SITE_URL,
+  BRAND_NAME,
+  TEACHER_NAME,
+  SITE_TITLE_DEFAULT,
+  SITE_DESCRIPTION_DEFAULT,
+  CORE_KEYWORDS,
+} from "@/lib/seo";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -27,47 +32,71 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://chembyneerajsir.com";
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0A3D91",
+};
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default:
-      "Chemistry with Neeraj Sharma | CBSE Chemistry Teacher | Notes & Resources",
-    template: "%s | CHEM by Neeraj Sir",
+    default: SITE_TITLE_DEFAULT,
+    template: `%s | ${BRAND_NAME}`,
   },
-  description:
-    "Learn Chemistry the conceptual way with Neeraj Sharma, an experienced CBSE Chemistry teacher with 15+ years of teaching. Premium notes, free resources, and concept-based learning for Class 11, 12, JEE & NEET.",
-  keywords: [
-    "chemistry teacher",
-    "CBSE chemistry notes",
-    "Neeraj Sharma chemistry",
-    "chemistry notes class 11",
-    "chemistry notes class 12",
-    "JEE chemistry",
-    "NEET chemistry",
-  ],
-  authors: [{ name: "Neeraj Sharma" }],
+  description: SITE_DESCRIPTION_DEFAULT,
+  keywords: CORE_KEYWORDS,
+  authors: [{ name: TEACHER_NAME, url: `${SITE_URL}/about` }],
+  creator: TEACHER_NAME,
+  publisher: BRAND_NAME,
+  applicationName: BRAND_NAME,
+  category: "education",
+  alternates: { canonical: SITE_URL },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/images/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/images/favicon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/images/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/images/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/images/apple-touch-icon.png", sizes: "180x180" }],
+  },
+  formatDetection: { telephone: true, email: true, address: true },
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: siteUrl,
-    siteName: "CHEM by Neeraj Sir",
-    title: "Chemistry with Neeraj Sharma | CBSE Chemistry Teacher",
-    description:
-      "Learn Chemistry the Conceptual Way with 15+ years of experience.",
-    images: [{ url: "/images/og-image.jpg", width: 1200, height: 630 }],
+    url: SITE_URL,
+    siteName: BRAND_NAME,
+    title: SITE_TITLE_DEFAULT,
+    description: SITE_DESCRIPTION_DEFAULT,
+    images: [{ url: "/images/og-image.jpg", width: 1200, height: 630, alt: BRAND_NAME }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Chemistry with Neeraj Sharma | CBSE Chemistry Teacher",
-    description:
-      "Learn Chemistry the Conceptual Way with 15+ years of experience.",
+    title: SITE_TITLE_DEFAULT,
+    description: SITE_DESCRIPTION_DEFAULT,
+    images: ["/images/og-image.jpg"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
+  // Paste verification codes from Google Search Console / Bing Webmaster
+  // Tools here once you've generated them for the live domain — they're
+  // how you prove ownership and start submitting the sitemap for indexing.
+  verification: {
+    google: "VcAh0D-jcNWhPJmNHIyy43YvmNIj5QyfP_Z7MwjiSAY",
+    other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+      ? { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION }
+      : undefined,
   },
 };
 
@@ -82,11 +111,7 @@ export default function RootLayout({
       className={`${poppins.variable} ${inter.variable} ${spaceGrotesk.variable}`}
     >
       <body>
-        <AnnouncementBar />
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <WhatsAppFloatButton />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

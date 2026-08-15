@@ -26,7 +26,7 @@ export default function AdminNotesPage() {
         </div>
       )}
 
-      <div className="mt-8 rounded-3xl bg-white border border-primary/8 p-8 shadow-soft">
+      <div className="mt-8 rounded-3xl bg-white border border-primary/8 p-5 sm:p-8 shadow-soft">
         <NoteUploadForm />
       </div>
     </div>

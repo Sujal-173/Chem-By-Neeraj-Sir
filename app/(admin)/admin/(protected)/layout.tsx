@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "@/lib/getServerSession";
-import AdminSidebar from "@/components/admin/AdminSidebar";
+import AdminShell from "@/components/admin/AdminShell";
 
 export default async function ProtectedAdminLayout({
   children,
@@ -14,9 +14,6 @@ export default async function ProtectedAdminLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-surface">
-      <AdminSidebar adminName={session.user.name || session.user.email} />
-      <main className="flex-1 overflow-y-auto p-8 lg:p-10">{children}</main>
-    </div>
+    <AdminShell adminName={session.user.name || session.user.email}>{children}</AdminShell>
   );
 }

@@ -53,7 +53,7 @@ export default async function AdminOverviewPage() {
       label: "Blog Posts",
       value: counts.postCount,
       icon: BookOpen,
-      href: "/studio",
+      href: "/admin/content",
     },
   ];
 
@@ -70,12 +70,12 @@ export default async function AdminOverviewPage() {
         </div>
       )}
 
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         {cards.map(({ label, value, icon: Icon, href }) => (
           <Link
             key={label}
             href={href}
-            className="group rounded-2xl bg-white border border-primary/8 p-6 hover:shadow-soft-lg hover:border-primary/20 transition-all"
+            className="group rounded-2xl bg-white border border-primary/8 p-5 sm:p-6 hover:shadow-soft-lg hover:border-primary/20 transition-all"
           >
             <div className="flex items-center justify-between">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/8 text-primary">
@@ -89,16 +89,16 @@ export default async function AdminOverviewPage() {
         ))}
       </div>
 
-      <div className="mt-10 rounded-2xl bg-white border border-primary/8 p-6">
-        <h2 className="font-heading font-semibold text-dark mb-1">Managing other content</h2>
+      <div className="mt-10 rounded-2xl bg-white border border-primary/8 p-5 sm:p-6">
+        <h2 className="font-heading font-semibold text-dark mb-1">Update the whole website</h2>
         <p className="text-sm text-dark/55 leading-relaxed">
-          Homepage, About, Blog posts, Testimonials, FAQs, Navigation, and Footer are all managed
-          in{" "}
-          <a href="/studio" target="_blank" rel="noopener noreferrer" className="text-primary font-medium hover:underline">
-            Sanity Studio
-          </a>
-          . This dashboard covers the pieces that live outside the CMS: contact messages, the
-          waiting list, and note uploads.
+          Homepage, About, Blog posts, Testimonials, FAQs, Navigation, and Footer are all editable
+          from one place —{" "}
+          <Link href="/admin/content" className="text-primary font-medium hover:underline">
+            Website Content
+          </Link>
+          . This overview page covers what lives outside the CMS: contact messages, the waiting
+          list, and note uploads.
         </p>
       </div>
     </div>

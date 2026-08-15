@@ -5,6 +5,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 6rem; /* keeps anchored content clear of the sticky navbar */
   }
 
   body {
@@ -52,6 +53,10 @@
 
   .molecule-dot {
     @apply rounded-full bg-primary/20;
+  }
+
+  .scroll-smooth-area {
+    scroll-behavior: smooth;
   }
 }
 

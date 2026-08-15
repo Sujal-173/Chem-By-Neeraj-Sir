@@ -2,12 +2,21 @@ import type { Metadata } from "next";
 import { Download } from "lucide-react";
 import { getResources } from "@/lib/sanity/queries";
 import CmsImage from "@/components/ui/CmsImage";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Free Chemistry Resources | Important Questions, NCERT Solutions & More",
+export const metadata: Metadata = buildMetadata({
+  title: "Free Chemistry Resources | Important Questions, NCERT Solutions & PYQs",
   description:
-    "Download free Chemistry resources: important questions, NCERT solutions, previous year questions, and sample notes — no signup required.",
-};
+    "Download free Chemistry resources: important questions, NCERT solutions, previous year questions, and sample notes for Class 9, Class 10, Class 11, Class 12, JEE and NEET — no signup required.",
+  path: "/resources",
+  keywords: [
+    "free chemistry resources",
+    "free chemistry notes download",
+    "chemistry important questions free",
+    "chemistry NCERT solutions free",
+    "chemistry previous year questions free",
+  ],
+});
 
 const TYPE_LABEL: Record<string, string> = {
   samplePdf: "Sample PDF",

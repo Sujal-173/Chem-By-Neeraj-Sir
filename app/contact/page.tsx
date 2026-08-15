@@ -2,17 +2,20 @@ import type { Metadata } from "next";
 import { MessageCircle, Mail, Phone } from "lucide-react";
 import { getEnv } from "@/lib/env";
 import ContactForm from "@/components/contact/ContactForm";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact Neeraj Sir",
+export const metadata: Metadata = buildMetadata({
+  title: "Contact Neeraj Sir | Chemistry Notes & Classes Enquiries",
   description:
-    "Get in touch with Neeraj Sharma for questions about Chemistry notes, coaching, or upcoming online classes.",
-};
+    "Get in touch with Neeraj Sharma for questions about Chemistry notes, coaching, or upcoming online classes for Class 11, Class 12, JEE and NEET.",
+  path: "/contact",
+  keywords: ["contact chemistry teacher", "chemistry tuition enquiry", "book chemistry classes"],
+});
 
 export default function ContactPage() {
   const env = getEnv();
   const contactEmail =
-    env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@chembyneerajsir.com";
+    env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@easychembyneerajsir.in";
   const contactPhone = env.NEXT_PUBLIC_CONTACT_PHONE || "+91-98765-43210";
   const whatsappLink =
     env.NEXT_PUBLIC_CONTACT_WHATSAPP || "https://wa.me/919876543210";

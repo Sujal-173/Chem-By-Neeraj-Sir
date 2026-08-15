@@ -5,7 +5,7 @@ import { MessageCircle, ArrowRight } from "lucide-react";
 export default function ContactCTA() {
   const env = getEnv();
   const contactEmail =
-    env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@chembyneerajsir.com";
+    env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@easychembyneerajsir.in";
   const whatsappLink =
     env.NEXT_PUBLIC_CONTACT_WHATSAPP || "https://wa.me/919876543210";
 

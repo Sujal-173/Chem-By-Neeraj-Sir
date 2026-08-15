@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import { Star } from "lucide-react";
 import { getTestimonials } from "@/lib/sanity/queries";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Student & Parent Testimonials",
-  description: "Read what students and parents say about learning Chemistry with Neeraj Sharma.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Student & Parent Testimonials | Easy Chem by Neeraj Sir",
+  description:
+    "Read what students and parents say about learning Chemistry with Neeraj Sharma — real reviews from CBSE, JEE and NEET Chemistry students.",
+  path: "/testimonials",
+  keywords: ["chemistry teacher reviews", "chemistry tuition testimonials", "student reviews chemistry"],
+});
 
 export default async function TestimonialsPage() {
   const testimonials = await getTestimonials();

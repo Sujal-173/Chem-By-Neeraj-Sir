@@ -2,12 +2,24 @@ import type { Metadata } from "next";
 import { getResources } from "@/lib/sanity/queries";
 import { getEnv } from "@/lib/env";
 import NotesGrid from "@/components/notes/NotesGrid";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Premium Chemistry Notes | Class 11 & 12",
+export const metadata: Metadata = buildMetadata({
+  title: "Premium Chemistry Notes for Class 9 , 10 , 11 & 12 | Chapter-wise PDF Notes",
   description:
-    "Chapter-wise, full, printed, and PDF Chemistry notes built for CBSE boards — concept-based, exam-ready, and written by an experienced teacher.",
-};
+    "Chapter-wise, full, printed, and PDF Chemistry notes built for CBSE boards — concept-based, exam-ready, and written by an experienced teacher. Covers class 9 class 10 Class 11, Class 12, JEE and NEET Chemistry.",
+  path: "/notes",
+  keywords: [
+    "premium chemistry notes",
+    "chapter wise chemistry notes",
+    "full chemistry notes class 9",
+    "full chemistry notes class 10",
+    "full chemistry notes class 11",
+    "full chemistry notes class 12",
+    "printed chemistry notes",
+    "buy chemistry notes online",
+  ],
+});
 
 export default async function NotesPage() {
   const resources = await getResources();

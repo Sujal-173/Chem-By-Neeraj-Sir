@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { getBlogPosts } from "@/lib/sanity/queries";
 import BlogList from "@/components/blog/BlogList";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Chemistry Blog | Board Prep, NCERT, JEE & NEET Articles",
   description:
-    "Weekly Chemistry articles covering board preparation, organic/physical/inorganic chemistry, NCERT, JEE, and NEET.",
-};
+    "Weekly Chemistry articles covering board preparation, organic/physical/inorganic chemistry, NCERT, JEE, and NEET — written for CBSE Class 9, 10, 11 and 12 students.",
+  path: "/blog",
+  keywords: ["chemistry blog", "chemistry articles", "chemistry exam tips", "chemistry study tips"],
+});
 
 export default async function BlogPage() {
   const posts = await getBlogPosts();

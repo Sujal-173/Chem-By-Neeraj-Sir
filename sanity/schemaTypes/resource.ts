@@ -65,7 +65,7 @@ export default defineType({
       name: "classLevel",
       title: "Class",
       type: "string",
-      options: { list: [{ title: "Class 11", value: "11" }, { title: "Class 12", value: "12" }] },
+      options: { list: [{ title: "Class 9", value: "9" },{ title: "Class 10", value: "10" },{ title: "Class 11", value: "11" }, { title: "Class 12", value: "12" }] },
       validation: (Rule) => Rule.required(),
     }),
     defineField({ name: "chapter", title: "Chapter (optional)", type: "string" }),

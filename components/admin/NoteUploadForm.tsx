@@ -149,6 +149,8 @@ export default function NoteUploadForm() {
             defaultValue="11"
             className="w-full rounded-xl border border-primary/15 px-4 py-3 text-sm bg-white focus:border-primary/40 transition-colors"
           >
+            <option value="09">Class 9</option>
+            <option value="10">Class 10</option>
             <option value="11">Class 11</option>
             <option value="12">Class 12</option>
           </select>

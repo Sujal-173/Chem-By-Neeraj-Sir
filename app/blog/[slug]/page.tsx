@@ -6,8 +6,7 @@ import { getBlogPostBySlug, getBlogPosts } from "@/lib/sanity/queries";
 import CmsImage from "@/components/ui/CmsImage";
 import PortableTextRenderer from "@/components/blog/PortableTextRenderer";
 import ShareButtons from "@/components/blog/ShareButtons";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://chembyneerajsir.com";
+import { SITE_URL, BRAND_NAME, TEACHER_NAME, buildMetadata, buildBreadcrumbSchema } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts();
@@ -21,12 +20,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getBlogPostBySlug(slug);
-  if (!post) return { title: "Article not found" };
-  return {
-    title: post.seo?.metaTitle || post.title,
+  if (!post) return { title: "Article not found", robots: { index: false, follow: false } };
+  return buildMetadata({
+    title: post.seo?.metaTitle || `${post.title} | Chemistry Blog`,
     description: post.seo?.metaDescription || post.excerpt,
-    openGraph: { title: post.title, description: post.excerpt, type: "article" },
-  };
+    path: `/blog/${post.slug.current}`,
+    keywords: post.tags && post.tags.length ? post.tags : [post.category?.title || "chemistry article"],
+    ogImage: post.coverImage?.url,
+    type: "article",
+  });
 }
 
 export default async function BlogPostPage({
@@ -43,16 +45,36 @@ export default async function BlogPostPage({
     .filter((p) => p.slug.current !== post.slug.current && p.category?.title === post.category?.title)
     .slice(0, 3);
 
+  const postUrl = `${SITE_URL}/blog/${post.slug.current}`;
+
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
     description: post.excerpt,
-    author: { "@type": "Person", name: post.author?.name || "Neeraj Sharma" },
+    image: post.coverImage?.url ? [post.coverImage.url] : undefined,
+    author: {
+      "@type": "Person",
+      name: post.author?.name || TEACHER_NAME,
+      url: `${SITE_URL}/about`,
+    },
     datePublished: post.publishedAt,
-    publisher: { "@type": "EducationalOrganization", name: "CHEM by Neeraj Sir" },
-    mainEntityOfPage: `${siteUrl}/blog/${post.slug.current}`,
+    dateModified: post.publishedAt,
+    publisher: {
+      "@type": "EducationalOrganization",
+      name: BRAND_NAME,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/images/logo.png` },
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
+    articleSection: post.category?.title,
+    keywords: post.tags?.join(", "),
   };
+
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blog" },
+    { name: post.title, path: `/blog/${post.slug.current}` },
+  ]);
 
   return (
     <div className="py-16 lg:py-24">
@@ -60,7 +82,10 @@ export default async function BlogPostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
-
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <div className="container-custom max-w-3xl">
         <span className="text-sm font-semibold text-accent">{post.category?.title}</span>
         <h1 className="mt-2 font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-dark tracking-tight leading-tight">
