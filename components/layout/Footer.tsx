@@ -18,7 +18,7 @@ const FOOTER_LINKS = {
   Coming: [
     { label: "Online Classes", href: "/online-classes" },
     { label: "Test Series", href: "/online-classes" },
-    { label: "Student Login", href: "/login" },
+    { label: "Student Login", href: "/online-classes" },
   ],
 };
 
