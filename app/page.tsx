@@ -13,7 +13,6 @@ import FAQ from "@/components/homepage/FAQ";
 import ContactCTA from "@/components/homepage/ContactCTA";
 import {
   buildMetadata,
-  buildOrganizationGraph,
   SITE_TITLE_DEFAULT,
   SITE_DESCRIPTION_DEFAULT,
 } from "@/lib/seo";
@@ -29,24 +28,9 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-function StructuredData() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@graph": buildOrganizationGraph(),
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
-}
-
 export default function HomePage() {
   return (
     <>
-      <StructuredData />
       <Hero />
       <Statistics />
       <AboutPreview />

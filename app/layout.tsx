@@ -8,6 +8,7 @@ import {
   SITE_TITLE_DEFAULT,
   SITE_DESCRIPTION_DEFAULT,
   CORE_KEYWORDS,
+  buildOrganizationGraph,
 } from "@/lib/seo";
 import "./globals.css";
 
@@ -110,6 +111,17 @@ export default function RootLayout({
       lang="en"
       className={`${poppins.variable} ${inter.variable} ${spaceGrotesk.variable}`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": buildOrganizationGraph(),
+            }),
+          }}
+        />
+      </head>
       <body>
         <SiteChrome>{children}</SiteChrome>
       </body>
