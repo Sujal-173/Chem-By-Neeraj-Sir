@@ -2,6 +2,9 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
 import { getBlogPosts } from "@/lib/sanity/queries";
 
+// Keep content-driven URLs fresh without asking Sanity on every sitemap request.
+export const revalidate = 3600;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: {
     path: string;
