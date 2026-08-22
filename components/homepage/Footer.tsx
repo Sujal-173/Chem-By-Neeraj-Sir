@@ -103,6 +103,17 @@ export default function Footer() {
 
       <div className="border-t border-white/10">
         <div className="container-custom py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+        <p className="text-center text-sm text-muted-foreground">
+  Made with ❤️ by{" "}
+  <a
+    href="https://aventracreative.in/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="font-semibold hover:opacity-70 transition-opacity"
+  >
+    Aventra Creative
+  </a>
+</p>
           <p>
             © {new Date().getFullYear()} CHEM by Neeraj Sir. All rights
             reserved.

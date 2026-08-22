@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { Download } from "lucide-react";
 import { getResources } from "@/lib/sanity/queries";
-import CmsImage from "@/components/ui/CmsImage";
+import FreeResourcesGrid from "@/components/resources/FreeResourcesGrid";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -17,14 +16,6 @@ export const metadata: Metadata = buildMetadata({
     "chemistry previous year questions free",
   ],
 });
-
-const TYPE_LABEL: Record<string, string> = {
-  samplePdf: "Sample PDF",
-  importantQuestions: "Important Questions",
-  ncertSolutions: "NCERT Solutions",
-  pyq: "Previous Year Questions",
-  revisionNotes: "Revision Notes",
-};
 
 export default async function ResourcesPage() {
   const resources = await getResources();
@@ -48,39 +39,7 @@ export default async function ResourcesPage() {
             New resources are being added — check back soon.
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {freeResources.map((resource) => (
-              <div
-                key={resource._id}
-                className="rounded-3xl bg-white border border-primary/8 overflow-hidden shadow-soft hover:shadow-soft-lg transition-shadow"
-              >
-                <CmsImage image={resource.thumbnail} alt={resource.title} className="aspect-[4/3]" />
-                <div className="p-6">
-                  <span className="text-xs font-semibold text-accent">
-                    {TYPE_LABEL[resource.resourceType] || resource.resourceType} · Class{" "}
-                    {resource.classLevel}
-                  </span>
-                  <h3 className="mt-2 font-heading font-semibold text-dark leading-snug">
-                    {resource.title}
-                  </h3>
-                  {resource.description && (
-                    <p className="mt-2 text-sm text-dark/55 leading-relaxed line-clamp-2">
-                      {resource.description}
-                    </p>
-                  )}
-                  <a
-                    href={resource.fileUrl || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-5 inline-flex items-center gap-2 rounded-full bg-primary/8 px-4 py-2.5 text-sm font-semibold text-primary hover:bg-primary hover:text-white transition-colors"
-                  >
-                    <Download className="h-4 w-4" />
-                    Download
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
+          <FreeResourcesGrid resources={freeResources} />
         )}
       </div>
     </div>

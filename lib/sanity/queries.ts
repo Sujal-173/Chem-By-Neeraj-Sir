@@ -38,7 +38,7 @@ export type Resource = {
   accessType: "free" | "premium";
   resourceType: string;
   subject: "chemistry" | "biology";
-  classLevel: "11" | "12";
+  classLevel: "9" | "10" | "11" | "12";
   chapter?: string;
   description?: string;
   thumbnail?: SanityImage;
@@ -193,6 +193,30 @@ const FALLBACK_TESTIMONIALS: Testimonial[] = [
 ];
 
 const FALLBACK_RESOURCES: Resource[] = [
+  {
+    _id: "fallback-0a",
+    title: "Atoms, Molecules & Chemical Reactions — Chapter Notes",
+    slug: { current: "atoms-molecules-chemical-reactions-notes" },
+    accessType: "premium",
+    resourceType: "chapterWise",
+    subject: "chemistry",
+    classLevel: "9",
+    description: "Foundational Class 9 concepts explained with everyday examples.",
+    priceDisplay: undefined,
+    publishedAt: new Date().toISOString(),
+  },
+  {
+    _id: "fallback-0b",
+    title: "Class 10 — Chemical Reactions & Equations Notes",
+    slug: { current: "chemical-reactions-equations-notes" },
+    accessType: "free",
+    resourceType: "revisionNotes",
+    subject: "chemistry",
+    classLevel: "10",
+    description: "Balancing equations and reaction types, board-exam ready.",
+    fileUrl: "#",
+    publishedAt: new Date().toISOString(),
+  },
   {
     _id: "fallback-1",
     title: "Chemical Bonding — Chapter Notes",

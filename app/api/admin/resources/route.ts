@@ -20,7 +20,7 @@ const bodySchema = z.object({
     "revisionNotes",
   ]),
   subject: z.enum(["chemistry", "biology"]),
-  classLevel: z.enum(["11", "12"]),
+  classLevel: z.enum(["9", "10", "11", "12"]),
   chapter: z.string().trim().max(120).optional(),
   description: z.string().trim().max(500).optional(),
   thumbnailUrl: z.string().url().optional(),

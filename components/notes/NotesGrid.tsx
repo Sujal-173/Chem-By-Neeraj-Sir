@@ -27,7 +27,8 @@ const TYPE_LABEL: Record<string, string> = {
   pdf: "PDF",
 };
 
-const CLASS_FILTERS = ["All", "11", "12"] as const;
+const CLASS_FILTERS = ["All", "9", "10", "11", "12"] as const;
+const CATEGORY_FILTERS = ["All", "chapterWise", "fullNotes", "printed", "pdf"] as const;
 
 export default function NotesGrid({
   resources,
@@ -38,33 +39,65 @@ export default function NotesGrid({
 }) {
   const [classFilter, setClassFilter] =
     useState<(typeof CLASS_FILTERS)[number]>("All");
+  const [categoryFilter, setCategoryFilter] =
+    useState<(typeof CATEGORY_FILTERS)[number]>("All");
 
   const filtered = useMemo(
     () =>
-      resources.filter((r) =>
-        classFilter === "All" ? true : r.classLevel === classFilter,
-      ),
-    [resources, classFilter],
+      resources.filter((r) => {
+        const matchesClass = classFilter === "All" ? true : r.classLevel === classFilter;
+        const matchesCategory = categoryFilter === "All" ? true : r.resourceType === categoryFilter;
+        return matchesClass && matchesCategory;
+      }),
+    [resources, classFilter, categoryFilter],
   );
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2 mb-10">
-        {CLASS_FILTERS.map((cls) => (
-          <button
-            key={cls}
-            type="button"
-            onClick={() => setClassFilter(cls)}
-            className={cn(
-              "rounded-full px-5 py-2 text-sm font-medium transition-colors",
-              classFilter === cls
-                ? "bg-primary text-white"
-                : "bg-white border border-primary/15 text-dark/70 hover:border-primary/40",
-            )}
-          >
-            {cls === "All" ? "All Classes" : `Class ${cls}`}
-          </button>
-        ))}
+      <div className="space-y-4 mb-10">
+        <div>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-dark/40">Class</p>
+          <div className="flex flex-wrap gap-2">
+            {CLASS_FILTERS.map((cls) => (
+              <button
+                key={cls}
+                type="button"
+                onClick={() => setClassFilter(cls)}
+                aria-pressed={classFilter === cls}
+                className={cn(
+                  "rounded-full px-5 py-2 text-sm font-medium transition-colors",
+                  classFilter === cls
+                    ? "bg-primary text-white"
+                    : "bg-white border border-primary/15 text-dark/70 hover:border-primary/40",
+                )}
+              >
+                {cls === "All" ? "All Classes" : `Class ${cls}`}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-dark/40">Category</p>
+          <div className="flex flex-wrap gap-2">
+            {CATEGORY_FILTERS.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setCategoryFilter(cat)}
+                aria-pressed={categoryFilter === cat}
+                className={cn(
+                  "rounded-full px-5 py-2 text-sm font-medium transition-colors",
+                  categoryFilter === cat
+                    ? "bg-accent text-white"
+                    : "bg-white border border-primary/15 text-dark/70 hover:border-primary/40",
+                )}
+              >
+                {cat === "All" ? "All Categories" : TYPE_LABEL[cat] || cat}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {filtered.length === 0 ? (
